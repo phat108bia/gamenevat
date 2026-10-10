@@ -7,18 +7,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: kivy/buildozer:latest
-    env:
-      BUILDOZER_ALLOW_ROOT: "1"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Fix git permission
-        run: git config --global --add safe.directory /__w/gamenevat/gamenevat
-
       - name: Build with Buildozer
-        run: buildozer -v android debug
+        uses: richardsimko/buildozer-action@v1
+        with:
+          command: android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
